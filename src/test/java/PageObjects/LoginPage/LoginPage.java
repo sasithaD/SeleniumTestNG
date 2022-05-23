@@ -2,8 +2,9 @@ package PageObjects.LoginPage;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import utils.TestBase;
 
-public class LoginPage {
+public class LoginPage extends TestBase {
 
     public WebDriver driver;
     private LoginPageElements loginPageElements;
@@ -14,21 +15,19 @@ public class LoginPage {
     }
 
     public void enterUserName(String userName) {
-        loginPageElements.userNameInput.clear();
-        loginPageElements.userNameInput.sendKeys(userName);
+        typeOnElement(loginPageElements.userNameInput, userName);
     }
 
     public void enterPassword(String password) {
-        loginPageElements.passwordInput.clear();
-        loginPageElements.passwordInput.sendKeys(password);
+        typeOnElement(loginPageElements.passwordInput, password);
     }
 
     public void clickLoginBtn() {
-        loginPageElements.loginBtn.click();
+        clickOnElement(loginPageElements.loginBtn);
     }
 
     public void assertInlineErrorMsg(String expectedErrorMsg) {
-        String actualErrorMsg = loginPageElements.errorMsg.getText();
+        String actualErrorMsg = getElementText(loginPageElements.errorMsg);
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg);
     }
 }
