@@ -1,17 +1,15 @@
 package PageObjects.LoginPage;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import utils.TestBase;
 
 public class LoginPage extends TestBase {
 
-    public WebDriver driver;
     private LoginPageElements loginPageElements;
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        this.loginPageElements = new LoginPageElements(driver);
+    public LoginPage() {
+        this.loginPageElements = new LoginPageElements();
     }
 
     public void enterUserName(String userName) {
@@ -30,4 +28,5 @@ public class LoginPage extends TestBase {
         String actualErrorMsg = getElementText(loginPageElements.errorMsg);
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg);
     }
+
 }

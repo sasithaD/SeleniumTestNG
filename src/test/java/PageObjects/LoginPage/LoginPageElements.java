@@ -1,16 +1,13 @@
 package PageObjects.LoginPage;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utils.TestBase;
 
-public class LoginPageElements {
+public class LoginPageElements extends TestBase {
 
-    public WebDriver driver;
-
-    public LoginPageElements(WebDriver driver) {
-        this.driver = driver;
+    public LoginPageElements() {
         PageFactory.initElements(driver, this);
     }
 

@@ -17,7 +17,7 @@ public class TestLoginPage extends TestBase {
     @BeforeMethod
     public void setupURL() {
         setupUrl();
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage();
     }
 
     @Test
