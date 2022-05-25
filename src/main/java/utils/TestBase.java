@@ -1,16 +1,20 @@
 package utils;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.xml.sax.Locator;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
+
 
 public class TestBase {
 
@@ -30,24 +34,38 @@ public class TestBase {
         }
     }
 
-    public static void setupPreRequisites() {
-        readPropertyFile();
-        String browserName = properties.getProperty("browser");
 
-        switch (browserName) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-                driver = new ChromeDriver();
-                break;
 
-            case "edge":
-                System.setProperty("webdriver.edge.driver", "src/main/resources/drivers/msedgedriver.exe");
-                driver = new EdgeDriver();
-                break;
-        }
+    public static void setupPreRequisites(String browser) {
+       // readPropertyFile();
+       // List<String> browsers = List.of(properties.getProperty("browser").split(","));
 
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
+       // if (browsers.size() > 0) {
+          //  for (String browser : browsers) {
+
+                switch (browser.toLowerCase()) {
+                    case "chrome":
+                        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+                        driver = new ChromeDriver();
+                        break;
+                    case "firefox":
+                        System.setProperty("webdriver.gecko.driver","src/main/resources/drivers/geckodriver.exe");
+                        //DesiredCapabilities capabilities = DesiredCapabilities.firefix();
+                        //capabilities.setCapability("marionette",true);
+                        driver = new FirefoxDriver();
+                        break;
+                    case "edge":
+                        System.setProperty("webdriver.edge.driver", "src/main/resources/drivers/msedgedriver.exe");
+                        driver = new EdgeDriver();
+                        break;
+                }
+          //  }
+
+            driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
+       // } else
+          //  testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
+
     }
 
     public static void setupUrl() {
@@ -81,4 +99,12 @@ public class TestBase {
         }
         return elementText;
     }
+
+    public static void selectValueFromAutoSuggestionListInTextField(WebElement element) {
+        testBaseLogger.info("Clicking on element " + element + "");
+        element.sendKeys(Keys.ARROW_DOWN +""+ Keys.ENTER);
+        testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
+    }
+
+
 }

@@ -1,9 +1,13 @@
 package Tests;
 
 import PageObjects.LoginPage.LoginPage;
+import com.google.j2objc.annotations.Property;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import utils.TestBase;
+
+import java.util.List;
+import java.util.Properties;
 
 public class TestLoginPage extends TestBase {
 
@@ -11,7 +15,15 @@ public class TestLoginPage extends TestBase {
 
     @BeforeSuite
     public void setupPreConditions() {
-        setupPreRequisites();
+
+        TestBase.readPropertyFile();
+        List<String> browsers = List.of(properties.getProperty("browser").split(","));
+        if (browsers.size() > 0) {
+            for (String browser : browsers) {
+                setupPreRequisites(browser);
+            }
+        } else
+            testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
     }
 
     @BeforeMethod
@@ -22,12 +34,14 @@ public class TestLoginPage extends TestBase {
 
     @Test
     public void loginWithValidCredentials() throws InterruptedException {
+
         loginPage.enterUserName("Admin");
         loginPage.enterPassword("admin123");
         loginPage.clickLoginBtn();
         Thread.sleep(2000);
         String url = driver.getCurrentUrl();
         Assert.assertEquals(url, "https://opensource-demo.orangehrmlive.com/index.php/dashboard");
+
     }
 
     public void loginWithIncorrectUserName() {
@@ -60,4 +74,5 @@ public class TestLoginPage extends TestBase {
     public void closeWebDriver() {
         driver.quit();
     }
+
 }
