@@ -1,10 +1,13 @@
 package utils;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.xml.sax.Locator;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,11 +20,12 @@ public class TestBase {
     public static WebDriver driver;
     public static Properties properties;
     public static Logger testBaseLogger = Logger.getLogger(String.valueOf(TestBase.class));
+    public static SoftAssert softAssert = new SoftAssert();
 
     public static void readPropertyFile() {
         try {
             properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/configurations/config.properties");
+            FileInputStream fileInputStream = new FileInputStream("configurations/properties/config.properties");
             properties.load(fileInputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,12 +40,12 @@ public class TestBase {
 
         switch (browserName) {
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "configurations/drivers/chromedriver.exe");
                 driver = new ChromeDriver();
                 break;
 
             case "edge":
-                System.setProperty("webdriver.edge.driver", "src/main/resources/drivers/msedgedriver.exe");
+                System.setProperty("webdriver.edge.driver", "configurations/drivers/msedgedriver.exe");
                 driver = new EdgeDriver();
                 break;
         }
@@ -57,11 +61,23 @@ public class TestBase {
     public static void typeOnElement(WebElement element, String inputValue) {
         if (!inputValue.isEmpty()) {
             element.clear();
-            testBaseLogger.info("\nTyping on element " + element + "");
+            testBaseLogger.info("\nTyping on element " + element + " value: " + inputValue + "");
             element.sendKeys(inputValue);
             testBaseLogger.info("Typing successful");
         } else {
             testBaseLogger.info("No input value specified for " + element + "");
+        }
+    }
+
+    public static void typeOnElementWithEnter(WebElement element, String inputValue) {
+        if (!inputValue.isEmpty()) {
+            element.clear();
+            testBaseLogger.info("\nTyping on element:  " + element + " value: " + inputValue);
+            element.sendKeys(inputValue);
+            element.sendKeys(Keys.RETURN);
+            testBaseLogger.info("Typing successful");
+        } else {
+            testBaseLogger.info("No value specified for " + element);
         }
     }
 
@@ -80,5 +96,20 @@ public class TestBase {
             testBaseLogger.info("No text found on specific element " + element + "");
         }
         return elementText;
+    }
+
+    public void selectDropDownByText(WebElement element, String text) {
+        testBaseLogger.info("Selecting value from dropdown");
+        Select select = new Select(element);
+        select.selectByVisibleText(text);
+        testBaseLogger.info("successfully selected from dropdown");
+    }
+
+    public static void softAssertEqual(String actualValue, String expectedValue, String errorMessage) {
+        softAssert.assertEquals(actualValue, expectedValue, errorMessage);
+    }
+
+    public static void assertEqual(String actualValue, String expectedValue, String errorMessage) {
+        Assert.assertEquals(actualValue, expectedValue, errorMessage);
     }
 }

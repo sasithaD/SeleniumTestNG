@@ -1,5 +1,6 @@
 package Tests;
 
+import PageObjects.HomePage.HomePage;
 import PageObjects.LoginPage.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -8,6 +9,7 @@ import utils.TestBase;
 public class TestLoginPage extends TestBase {
 
     public LoginPage loginPage;
+    public HomePage homePage;
 
     @BeforeSuite
     public void setupPreConditions() {
@@ -18,6 +20,7 @@ public class TestLoginPage extends TestBase {
     public void setupURL() {
         setupUrl();
         loginPage = new LoginPage();
+        homePage = new HomePage();
     }
 
     @Test
