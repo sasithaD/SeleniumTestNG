@@ -77,7 +77,7 @@ public class TestUserManagementPage extends TestBase {
 
     @Test
     public void verifyDeleteButton() {
-        userManagementPage.selectTableCheckBox();
+        userManagementPage.selectAndDisSelectTableCheckBox();
     }
 
     @AfterTest
