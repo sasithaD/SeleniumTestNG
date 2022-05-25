@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -105,11 +107,41 @@ public class TestBase {
         testBaseLogger.info("successfully selected from dropdown");
     }
 
-    public static void softAssertEqual(String actualValue, String expectedValue, String errorMessage) {
+    public void selectDropDownByIndex(WebElement element, int index) {
+        Select select = new Select(element);
+        select.selectByIndex(index);
+    }
+
+    public static void softAssertFailure(String actualValue, String expectedValue, String errorMessage) {
         softAssert.assertEquals(actualValue, expectedValue, errorMessage);
     }
 
-    public static void assertEqual(String actualValue, String expectedValue, String errorMessage) {
+    public static void assertFailure(String actualValue, String expectedValue, String errorMessage) {
         Assert.assertEquals(actualValue, expectedValue, errorMessage);
+    }
+
+    public static boolean isElementPresentAndDisplay(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public static void clearInputField(WebElement element) {
+        element.sendKeys(Keys.CONTROL + "a");
+        element.sendKeys(Keys.DELETE);
+    }
+
+    public static void selectCheckBox(WebElement element) {
+        if (!element.isSelected()) {
+            clickOnElement(element);
+        }
+    }
+
+    public static void disSelectCheckBox(WebElement element) {
+        if (element.isSelected()) {
+            clickOnElement(element);
+        }
     }
 }

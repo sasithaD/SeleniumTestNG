@@ -26,7 +26,8 @@ public class LoginPage extends TestBase {
 
     public void assertInlineErrorMsg(String expectedErrorMsg) {
         String actualErrorMsg = getElementText(loginPageElements.errorMsg);
-        Assert.assertEquals(actualErrorMsg, expectedErrorMsg);
+        if (!expectedErrorMsg.equals(actualErrorMsg)) {
+            assertFailure(actualErrorMsg, expectedErrorMsg, "Error message incorrect, Expected value : " + expectedErrorMsg + " but Actual value: " + actualErrorMsg + "");
+        }
     }
-
 }
