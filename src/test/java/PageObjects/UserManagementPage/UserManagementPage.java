@@ -1,5 +1,6 @@
 package PageObjects.UserManagementPage;
 
+import org.openqa.selenium.By;
 import utils.TestBase;
 
 public class UserManagementPage extends TestBase {
@@ -30,6 +31,10 @@ public class UserManagementPage extends TestBase {
         clickOnElement(userManagementPageElements.userSearchBtn);
     }
 
+    public void clickResetBtn() {
+        clickOnElement(userManagementPageElements.resetBtn);
+    }
+
     public void assertTableUserName(String expectedName) {
         String actualName = getElementText(userManagementPageElements.tableUserName);
         if (!expectedName.equals(actualName)) {
@@ -58,8 +63,21 @@ public class UserManagementPage extends TestBase {
         }
     }
 
-    public void selectAndDisSelectTableCheckBox() {
+    public void verifyDeleteButtonIsClickable() {
+        if (isElementEnableForAction(userManagementPageElements.deleteBtn)) {
+            assertFailure("", "", "Delete button should not be enabled");
+        }
         selectCheckBox(userManagementPageElements.tableCheckBox);
+        waitUntilElementGetClickable(userManagementPageElements.deleteBtn, 10);
+        if (!isElementEnableForAction(userManagementPageElements.deleteBtn)) {
+            assertFailure("", "", "Web element is still disable");
+        }
         disSelectCheckBox(userManagementPageElements.tableCheckBox);
+    }
+
+    public void verifyTableColumns(String columnName) {
+        if (!isElementPresent(By.xpath("//*[@id='resultTable']//a[contains(text(),'" + columnName + "')]"))) {
+            assertFailure("", "", "Column " + columnName + " is not found");
+        }
     }
 }

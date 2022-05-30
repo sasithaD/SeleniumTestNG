@@ -24,6 +24,12 @@ public class LoginPage extends TestBase {
         clickOnElement(loginPageElements.loginBtn);
     }
 
+    public void loginToTheApplication(String userName, String password) {
+        enterUserName(userName);
+        enterPassword(password);
+        clickLoginBtn();
+    }
+
     public void assertInlineErrorMsg(String expectedErrorMsg) {
         String actualErrorMsg = getElementText(loginPageElements.errorMsg);
         if (!expectedErrorMsg.equals(actualErrorMsg)) {

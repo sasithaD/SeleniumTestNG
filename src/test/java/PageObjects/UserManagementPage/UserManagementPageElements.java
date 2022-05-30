@@ -38,10 +38,13 @@ public class UserManagementPageElements extends TestBase {
     @FindBy(css = "#resultTable tbody tr:nth-child(1) td:nth-child(5)")
     WebElement tableStatus;
 
-    @FindBy(css = "#resultTable tbody tr:nth-child(1) td:nth-child(1) input")
+    @FindBy(css = "#resultTable tbody tr:nth-child(2) td:nth-child(1) input")
     WebElement tableCheckBox;
 
-    @FindBy(css = "#btnAdd")
-    WebElement userAddBtn;
+    @FindBy(css = "#resetBtn")
+    WebElement resetBtn;
+
+    @FindBy(css = "#btnDelete")
+    WebElement deleteBtn;
 
 }

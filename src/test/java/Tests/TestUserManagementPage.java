@@ -3,10 +3,7 @@ package Tests;
 import PageObjects.HomePage.HomePage;
 import PageObjects.LoginPage.LoginPage;
 import PageObjects.UserManagementPage.UserManagementPage;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import utils.TestBase;
 
 public class TestUserManagementPage extends TestBase {
@@ -20,17 +17,14 @@ public class TestUserManagementPage extends TestBase {
         setupPreRequisites();
     }
 
-    @BeforeMethod
-    public void setupURL() throws InterruptedException {
+    @BeforeClass
+    public void setupURL() {
         setupUrl();
         loginPage = new LoginPage();
         homePage = new HomePage();
         userManagementPage = new UserManagementPage();
 
-        loginPage.enterUserName("Admin");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginBtn();
-        Thread.sleep(2000);
+        loginPage.loginToTheApplication(properties.getProperty("userName"), properties.getProperty("password"));
         homePage.selectOptionFromMainMenu("Admin");
     }
 
@@ -39,6 +33,7 @@ public class TestUserManagementPage extends TestBase {
         userManagementPage.enterUserName("Admin");
         userManagementPage.clickSearchUserBtn();
         userManagementPage.assertTableUserName("Admin");
+        userManagementPage.clickResetBtn();
     }
 
     @Test(priority = 2)
@@ -46,6 +41,7 @@ public class TestUserManagementPage extends TestBase {
         userManagementPage.selectUserRoleFromDropDown("ESS");
         userManagementPage.clickSearchUserBtn();
         userManagementPage.assertTableUserRole("ESS");
+        userManagementPage.clickResetBtn();
     }
 
     @Test(priority = 3)
@@ -53,6 +49,7 @@ public class TestUserManagementPage extends TestBase {
         userManagementPage.enterEmployeeName("Cassidy Hope");
         userManagementPage.clickSearchUserBtn();
         userManagementPage.assertTableEmployeeName("Cassidy Hope");
+        userManagementPage.clickResetBtn();
     }
 
     @Test(priority = 4)
@@ -60,6 +57,7 @@ public class TestUserManagementPage extends TestBase {
         userManagementPage.selectStatusFromDropDown("Disabled");
         userManagementPage.clickSearchUserBtn();
         userManagementPage.assertTableStatus("Disabled");
+        userManagementPage.clickResetBtn();
     }
 
     @Test(priority = 5)
@@ -75,12 +73,20 @@ public class TestUserManagementPage extends TestBase {
         userManagementPage.assertTableStatus("Enabled");
     }
 
-    @Test
-    public void verifyDeleteButton() {
-        userManagementPage.selectAndDisSelectTableCheckBox();
+    @Test(priority = 6)
+    public void verifyDeleteButtonActions() {
+        userManagementPage.verifyDeleteButtonIsClickable();
     }
 
-    @AfterTest
+    @Test(priority = 7)
+    public void verifyUserTable() {
+        userManagementPage.verifyTableColumns("Username");
+        userManagementPage.verifyTableColumns("User Role");
+        userManagementPage.verifyTableColumns("Employee Name");
+        userManagementPage.verifyTableColumns("Status");
+    }
+
+    @AfterClass
     public void closeWebDriver() {
         driver.quit();
     }

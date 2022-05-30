@@ -14,4 +14,10 @@ public class HomePage extends TestBase {
     public void selectOptionFromMainMenu(String option) {
         clickOnElement(driver.findElement(By.xpath("//*[@id='mainMenuFirstLevelUnorderedList']//b[contains(text(),'" + option + "')]")));
     }
+
+    public void verifyWelcomeTextIsPresent() {
+        if (!isElementPresentAndDisplay(homePageElements.welcomeText)) {
+            assertFailure("", "", "Home page welcome text element is missing");
+        }
+    }
 }
