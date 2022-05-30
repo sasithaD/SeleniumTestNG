@@ -7,13 +7,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.logging.Logger;
 import jxl.Sheet;
@@ -155,12 +162,66 @@ public class TestBase {
         testBaseLogger.info("successfully selected from dropdown");
     }
 
-    public static void softAssertEqual(String actualValue, String expectedValue, String errorMessage) {
-        softAssert.assertEquals(actualValue, expectedValue, errorMessage);
+    public void selectDropDownByIndex(WebElement element, int index) {
+        Select select = new Select(element);
+        select.selectByIndex(index);
     }
 
-    public static void assertEqual(String actualValue, String expectedValue, String errorMessage) {
+    public static void softAssertFailure(String actualValue, String expectedValue, String errorMessage) {
+        softAssert.assertEquals(actualValue, expectedValue, errorMessage);
+        softAssert.fail(errorMessage);
+    }
+
+    public static void assertFailure(String actualValue, String expectedValue, String errorMessage) {
         Assert.assertEquals(actualValue, expectedValue, errorMessage);
+        Assert.fail(errorMessage);
+    }
+
+    public static boolean isElementPresentAndDisplay(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public static boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public static boolean isElementEnableForAction(WebElement element) {
+        try {
+            return element.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public static void clearInputField(WebElement element) {
+        element.sendKeys(Keys.CONTROL + "a");
+        element.sendKeys(Keys.DELETE);
+    }
+
+    public static void selectCheckBox(WebElement element) {
+        if (!element.isSelected()) {
+            clickOnElement(element);
+        }
+    }
+
+    public static void disSelectCheckBox(WebElement element) {
+        if (element.isSelected()) {
+            clickOnElement(element);
+        }
+    }
+
+    public static void waitUntilElementGetClickable(WebElement element, long timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public String[][] readExcelData(String excelFileName, String sheetName) {

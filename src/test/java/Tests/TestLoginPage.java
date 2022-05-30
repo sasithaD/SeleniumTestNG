@@ -20,7 +20,7 @@ public class TestLoginPage extends TestBase {
         setupPreRequisites();
     }
 
-    @BeforeMethod
+    @BeforeClass
     public void setupURL() {
         setupUrl();
         loginPage = new LoginPage();
@@ -36,9 +36,10 @@ public class TestLoginPage extends TestBase {
         Thread.sleep(2000);
         String url = driver.getCurrentUrl();
         Assert.assertEquals(url, "https://opensource-demo.orangehrmlive.com/index.php/dashboard");
-
+        homePage.verifyWelcomeTextIsPresent();
     }
 
+    @Test
     public void loginWithIncorrectUserName() {
         loginPage.enterUserName("Admin111");
         loginPage.enterPassword("admin123");

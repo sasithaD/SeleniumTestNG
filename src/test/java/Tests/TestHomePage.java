@@ -1,11 +1,5 @@
 package Tests;
 
-import PageObjects.HomePage.HomePage;
-import PageObjects.LoginPage.LoginPage;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
 import utils.TestBase;
 
 public class TestHomePage extends TestBase {
