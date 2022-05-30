@@ -17,15 +17,7 @@ public class TestLoginPage extends TestBase {
 
     @BeforeSuite
     public void setupPreConditions() {
-
-        TestBase.readPropertyFile();
-        List<String> browsers = List.of(properties.getProperty("browser").split(","));
-        if (browsers.size() > 0) {
-            for (String browser : browsers) {
-                setupPreRequisites(browser);
-            }
-        } else
-            testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
+        setupPreRequisites();
     }
 
     @BeforeMethod

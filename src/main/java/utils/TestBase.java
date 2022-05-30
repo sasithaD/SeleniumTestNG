@@ -1,12 +1,12 @@
 package utils;
 
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -14,9 +14,11 @@ import org.testng.asserts.SoftAssert;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 
 public class TestBase {
@@ -40,37 +42,60 @@ public class TestBase {
 
 
 
-    public static void setupPreRequisites(String browser) {
-       // readPropertyFile();
-       // List<String> browsers = List.of(properties.getProperty("browser").split(","));
+    public static void setupPreRequisites() {
+        readPropertyFile();
+        String browserName = properties.getProperty("browser");
 
-       // if (browsers.size() > 0) {
-          //  for (String browser : browsers) {
+        switch (browserName) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "configurations/drivers/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
 
-                switch (browser.toLowerCase()) {
-                    case "chrome":
-                        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-                        driver = new ChromeDriver();
-                        break;
-                    case "firefox":
-                        System.setProperty("webdriver.gecko.driver","src/main/resources/drivers/geckodriver.exe");
-                        //DesiredCapabilities capabilities = DesiredCapabilities.firefix();
-                        //capabilities.setCapability("marionette",true);
-                        driver = new FirefoxDriver();
-                        break;
-                    case "edge":
-                        System.setProperty("webdriver.edge.driver", "src/main/resources/drivers/msedgedriver.exe");
-                        driver = new EdgeDriver();
-                        break;
-                }
-          //  }
+            case "edge":
+                System.setProperty("webdriver.edge.driver", "configurations/drivers/msedgedriver.exe");
+                driver = new EdgeDriver();
+                break;
 
-            driver.manage().window().maximize();
-            driver.manage().deleteAllCookies();
-       // } else
-          //  testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
+        }
+
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+    }
+
+    public static void setupPreRequisitesWithBrowserList(String browser) {
+        // readPropertyFile();
+        // List<String> browsers = List.of(properties.getProperty("browser").split(","));
+
+        // if (browsers.size() > 0) {
+        //  for (String browser : browsers) {
+
+        switch (browser.toLowerCase()) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "configurations/drivers/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver","configurations/drivers/geckodriver.exe");
+                //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                //capabilities.setCapability("marionette",true);
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                System.setProperty("webdriver.edge.driver", "configurations/drivers/msedgedriver.exe");
+                driver = new EdgeDriver();
+                break;
+        }
+        //  }
+
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        // } else
+        //  testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
 
     }
+
+
 
     public static void setupUrl() {
         driver.get(properties.getProperty("url"));
@@ -137,4 +162,53 @@ public class TestBase {
     public static void assertEqual(String actualValue, String expectedValue, String errorMessage) {
         Assert.assertEquals(actualValue, expectedValue, errorMessage);
     }
+
+    public String[][] readExcelData(String excelFileName, String sheetName) {
+
+        String[][] excelDataList = null;
+
+        try {
+            FileInputStream fileStream = new FileInputStream(excelFileName);
+            Workbook workBook = Workbook.getWorkbook(fileStream);
+            Sheet excelSheet = workBook.getSheet(sheetName);
+
+            int totalNoOfCols = excelSheet.getColumns();
+            int totalNoOfRows = excelSheet.getRows();
+
+            excelDataList = new String[totalNoOfRows-1][totalNoOfCols];
+
+            for (int i= 1 ; i < totalNoOfRows; i++) {
+
+                for (int j=0; j < totalNoOfCols; j++) {
+                    excelDataList[i-1][j] = excelSheet.getCell(j, i).getContents();
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            testBaseLogger.info("Unable to locate file");
+        } catch (IOException e) {
+            e.printStackTrace();
+            testBaseLogger.info("Unable to read file");
+        } catch (BiffException e) {
+            e.printStackTrace();
+            testBaseLogger.info("Unable to read the excel file");
+        }
+        return excelDataList;
+    }
+
+    public static boolean isElementEnabled(WebElement element) {
+        boolean isEnabled = true;
+        testBaseLogger.info("Element Located " + element + "");
+        if (element.isEnabled()){
+            isEnabled = true;
+            testBaseLogger.info("Element is enabled");
+        } else {
+            isEnabled = false;
+            testBaseLogger.info("Element is disabled");
+        }
+         return isEnabled;
+
+    }
+
 }

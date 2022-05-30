@@ -15,7 +15,7 @@ public class TestHomePage extends TestBase {
 
     @BeforeSuite
     public void setupPreConditions() {
-        setupPreRequisites();
+        //setupPreRequisites();
     }
 
     @BeforeMethod

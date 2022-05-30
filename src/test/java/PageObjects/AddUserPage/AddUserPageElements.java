@@ -1,17 +1,39 @@
 package PageObjects.AddUserPage;
 
-public class AddUserPageElements {
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import utils.TestBase;
 
-    public static final String menuAdmin =  "a[id='menu_admin_viewAdminModule']";
-    public static final String btnAddEmployee = "input[id='btnAdd']" ;
-    public static final String drpUserRole =  "select[id='systemUser_userType']" ;
-    public static final String drpUserRoleOption = "option[value='2']" ;
-    public static final String txtEmpName = "input[id='systemUser_employeeName_empName']";
-    public static final String txtEmpNameSelected = "input[id='systemUser_employeeName_empId']";
-    public static final String txtEmpUsername = "input[id='systemUser_userName']";
-    public static final String drpEmpStatus = "select[id='systemUser_status']";
-    public static final String drpUserStatusOption = "option[value='1']" ;
-    public static final String txtEmpPassword = "input[id='systemUser_password']";
-    public static final String txtEmpConfirmPassword = "input[id='systemUser_confirmPassword']";
-    public static final String btnEmpSave = "input[id='btnSave']" ;
+public class AddUserPageElements extends TestBase {
+
+
+    public AddUserPageElements() {
+        PageFactory.initElements(driver, this);
+    }
+
+    @FindBy(css = "a[id='menu_admin_viewAdminModule']")
+     WebElement menuAdmin;
+    @FindBy(css = "input[id='btnAdd']")
+     WebElement btnAddEmployee;
+    @FindBy(css = "select[id='systemUser_userType']")
+     WebElement drpUserRole;
+    @FindBy(css = "option[value='2']")
+     WebElement drpUserRoleOption;
+    @FindBy(css = "input[id='systemUser_employeeName_empName']")
+     WebElement txtEmpName;
+    @FindBy(css = "input[id='systemUser_employeeName_empId']")
+     WebElement txtEmpNameSelected;
+    @FindBy(css = "input[id='systemUser_userName']")
+     WebElement txtEmpUsername;
+    @FindBy(css = "select[id='systemUser_status']")
+     WebElement drpEmpStatus;
+    @FindBy(css = "option[value='1']")
+     WebElement drpUserStatusOption;
+    @FindBy(css = "input[id='systemUser_password']")
+     WebElement txtEmpPassword;
+    @FindBy(css = "input[id='systemUser_confirmPassword']")
+     WebElement txtEmpConfirmPassword;
+    @FindBy(css = "input[id='btnSave']")
+     WebElement btnEmpSave;
 }
