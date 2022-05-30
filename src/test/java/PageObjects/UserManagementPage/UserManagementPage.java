@@ -44,8 +44,10 @@ public class UserManagementPage extends TestBase {
 
     public void assertTableUserRole(String expectedRole) {
         String actualRole = getElementText(userManagementPageElements.tableUserRole);
-        if (!expectedRole.equals(actualRole)) {
-            assertFailure(actualRole, expectedRole, "User role incorrect, Expected value: " + expectedRole + " but the actual value: " + actualRole + "");
+        for (int i = 0; i < userManagementPageElements.tableRowList.size(); i++) {
+            if (!getElementTextBy(By.xpath("//*[@id='resultTable']//tbody//tr[" + Integer.valueOf(i + 1) + "]//td[3]")).equals(expectedRole)) {
+                assertFailure(actualRole, expectedRole, "User role incorrect, Expected value: " + expectedRole + " but the actual value: " + actualRole + "");
+            }
         }
     }
 
@@ -58,8 +60,10 @@ public class UserManagementPage extends TestBase {
 
     public void assertTableStatus(String expectedStatus) {
         String actualStatus = getElementText(userManagementPageElements.tableStatus);
-        if (!expectedStatus.equals(actualStatus)) {
-            assertFailure(actualStatus, expectedStatus, "User status incorrect, Expected value: " + expectedStatus + " but the actual value: " + actualStatus + "");
+        for (int i = 0; i < userManagementPageElements.tableRowList.size(); i++) {
+            if (!getElementTextBy(By.xpath("//*[@id='resultTable']//tbody//tr[" + Integer.valueOf(i + 1) + "]//td[5]")).equals(expectedStatus)) {
+                assertFailure(actualStatus, expectedStatus, "User status incorrect, Expected value: " + expectedStatus + " but the actual value: " + actualStatus + "");
+            }
         }
     }
 
@@ -68,7 +72,7 @@ public class UserManagementPage extends TestBase {
             assertFailure("", "", "Delete button should not be enabled");
         }
         selectCheckBox(userManagementPageElements.tableCheckBox);
-        waitUntilElementGetClickable(userManagementPageElements.deleteBtn, 10);
+        waitUntilElementGetClickable(userManagementPageElements.deleteBtn);
         if (!isElementEnableForAction(userManagementPageElements.deleteBtn)) {
             assertFailure("", "", "Web element is still disable");
         }
