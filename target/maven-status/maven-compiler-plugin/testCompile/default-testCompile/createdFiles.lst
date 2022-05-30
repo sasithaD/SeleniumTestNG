@@ -1,0 +1,6 @@
+Tests\TestHomePage.class
+PageObjects\LoginPage\LoginPage.class
+Tests\TestLoginPage.class
+PageObjects\HomePage\HomePage.class
+PageObjects\LoginPage\LoginPageElements.class
+PageObjects\HomePage\HomePageElements.class
