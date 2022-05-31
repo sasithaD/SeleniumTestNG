@@ -155,6 +155,17 @@ public class TestBase {
     }
 
 
+    public static String getElementTextBy(By by) {
+        testBaseLogger.info("Retrieving the element text of " + driver.findElement(by) + "");
+        String elementText = driver.findElement(by).getText();
+        if (!elementText.isEmpty()) {
+            testBaseLogger.info("Retrieving text successful");
+        } else {
+            testBaseLogger.info("No text found on specific element " + driver.findElement(by) + "");
+        }
+        return elementText;
+    }
+
     public void selectDropDownByText(WebElement element, String text) {
         testBaseLogger.info("Selecting value from dropdown");
         Select select = new Select(element);
@@ -219,9 +230,18 @@ public class TestBase {
         }
     }
 
-    public static void waitUntilElementGetClickable(WebElement element, long timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+    public static void waitUntilElementGetClickable(WebElement element) {
+        try {
+            String timeout = properties.getProperty("waitingTime");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (ElementClickInterceptedException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        }
     }
 
     public String[][] readExcelData(String excelFileName, String sheetName) {

@@ -5,6 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.TestBase;
 
+import java.util.List;
+
 public class UserManagementPageElements extends TestBase {
 
     public UserManagementPageElements() {
@@ -46,5 +48,8 @@ public class UserManagementPageElements extends TestBase {
 
     @FindBy(css = "#btnDelete")
     WebElement deleteBtn;
+
+    @FindBy(xpath = "//*[@id='resultTable']//tbody//tr")
+    List<WebElement> tableRowList;
 
 }
