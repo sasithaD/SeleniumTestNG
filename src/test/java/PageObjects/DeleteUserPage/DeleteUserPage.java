@@ -46,4 +46,11 @@ public class DeleteUserPage extends TestBase {
     public void clickDialogDeleteBtn(){
         clickOnElement(deleteUserPageElements.btnDialogDelete);
     }
+
+    public String clickOnNoDataRow(){
+
+        String txt = getElementText(deleteUserPageElements.colNoRecord);
+        return txt;
+
+    }
 }

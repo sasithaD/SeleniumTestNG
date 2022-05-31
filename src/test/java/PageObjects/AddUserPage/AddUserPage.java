@@ -54,4 +54,16 @@ public class AddUserPage extends TestBase {
         clickOnElement(addUserPageElements.btnEmpSave);
     }
 
+    public void waitUntilForm(){
+        waitUntilElementGetClickable(addUserPageElements.drpEmpStatus, 2);
+    }
+
+    public void waitUntilSave(){
+        waitUntilElementGetClickable(addUserPageElements.btnEmpSave, 2);
+    }
+
+    public void waitUntilMenu(){
+        waitUntilElementGetClickable(addUserPageElements.btnAddEmployee, 5);
+    }
+
 }

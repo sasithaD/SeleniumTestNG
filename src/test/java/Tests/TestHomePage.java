@@ -1,10 +1,12 @@
 package Tests;
 
+import PageObjects.HomePage.HomePage;
+import PageObjects.LoginPage.LoginPage;
 import utils.TestBase;
 
 public class TestHomePage extends TestBase {
 
-    public HomePage homePage;
+/*    public HomePage homePage;
     public LoginPage loginPage;
 
     @BeforeSuite
@@ -69,5 +71,5 @@ public class TestHomePage extends TestBase {
     @AfterTest
     public void closeWebDriver() {
         driver.quit();
-    }
+    }*/
 }

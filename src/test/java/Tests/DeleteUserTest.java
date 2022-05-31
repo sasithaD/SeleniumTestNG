@@ -3,6 +3,7 @@ package Tests;
 import PageObjects.DeleteUserPage.DeleteUserPage;
 import PageObjects.LoginPage.LoginPage;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -42,10 +43,10 @@ public class DeleteUserTest extends TestBase {
     @Test
     public void deleteUser() throws InterruptedException {
 
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         DeleteUserPage deleteUserPage = PageFactory.initElements(driver, DeleteUserPage.class);
         deleteUserPage.clickMenuAdmin();
-        deleteUserPage.typeUsername("tomcat3");
+        deleteUserPage.typeUsername("firefox2");
         deleteUserPage.clickSearchBtn();
         deleteUserPage.checkboxSelect();
         boolean isDeleteEnabled = deleteUserPage.isDeletebuttonEnabled();
@@ -56,6 +57,10 @@ public class DeleteUserTest extends TestBase {
             deleteUserPage.clickDeleteBtn();
             deleteUserPage.clickDialogDeleteBtn();
         }
+        deleteUserPage.typeUsername("firefox2");
+        deleteUserPage.clickSearchBtn();
+        String txt = deleteUserPage.clickOnNoDataRow();
+        Assert.assertEquals(txt, "No Records Found");
 
 
     }
