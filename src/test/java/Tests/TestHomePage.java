@@ -5,6 +5,7 @@ import PageObjects.LoginPage.LoginPage;
 import utils.TestBase;
 
 public class TestHomePage extends TestBase {
+<<<<<<< HEAD
 
 /*    public HomePage homePage;
     public LoginPage loginPage;
@@ -72,4 +73,6 @@ public class TestHomePage extends TestBase {
     public void closeWebDriver() {
         driver.quit();
     }*/
+=======
+>>>>>>> 01523e1b3917eddfcf83256d8cf77fa59febe3f5
 }

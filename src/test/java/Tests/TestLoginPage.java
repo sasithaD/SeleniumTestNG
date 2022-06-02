@@ -1,14 +1,10 @@
 package Tests;
 
-import PageObjects.HomePage.HomePage;
-import PageObjects.LoginPage.LoginPage;
-import com.google.j2objc.annotations.Property;
+import PageObjects.HomePage;
+import PageObjects.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import utils.TestBase;
-
-import java.util.List;
-import java.util.Properties;
 
 public class TestLoginPage extends TestBase {
 
