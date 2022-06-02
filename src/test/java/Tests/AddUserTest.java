@@ -1,6 +1,6 @@
 package Tests;
 
-import PageObjects.AddUserPage;
+import PageObjects.AddUserPage.AddUserPage;
 import DataProvider.AddUserDataProvider;
 import PageObjects.LoginPage;
 import org.openqa.selenium.support.PageFactory;
@@ -11,7 +11,7 @@ import utils.TestBase;
 import java.util.List;
 
 
-public class AddUserTest extends TestBase {
+public class AddUserTest extends TestBase{
 
     public LoginPage loginPage;
 
