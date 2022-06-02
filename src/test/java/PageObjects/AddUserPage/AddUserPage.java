@@ -26,9 +26,9 @@ public class AddUserPage extends TestBase {
         typeOnElement(addUserPageElements.txtEmpName, ename);
     }
 
-    public void selectEmployeeName(){
+/*    public void selectEmployeeName(){
         selectValueFromAutoSuggestionListInTextField(addUserPageElements.txtEmpNameSelected);
-    }
+    }*/
 
     public void typeEmpName(String nm){
         typeOnElementWithEnter(addUserPageElements.txtEmpName, nm);
@@ -55,15 +55,15 @@ public class AddUserPage extends TestBase {
     }
 
     public void waitUntilForm(){
-        waitUntilElementGetClickable(addUserPageElements.drpEmpStatus, 2);
+        waitUntilElementIsVisible("select[id='systemUser_status']", 2);
     }
 
     public void waitUntilSave(){
-        waitUntilElementGetClickable(addUserPageElements.btnEmpSave, 2);
+        waitUntilElementIsVisible("input[id='btnAdd']", 2);
     }
 
     public void waitUntilMenu(){
-        waitUntilElementGetClickable(addUserPageElements.btnAddEmployee, 5);
+        waitUntilElementIsVisible("input[id='btnAdd']", 5);
     }
 
 }

@@ -148,10 +148,13 @@ public class TestBase {
         return elementText;
     }
 
-    public static void selectValueFromAutoSuggestionListInTextField(WebElement element) {
-        testBaseLogger.info("Clicking on element " + element + "");
-        element.sendKeys(Keys.ARROW_DOWN +""+ Keys.ENTER);
-        testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
+    public static void selectValueFromAutoSuggestionListInTextField(WebElement element, String txt) {
+            element.clear();
+            testBaseLogger.info("\nTyping on element:  " + element + " value: " + txt);
+            element.sendKeys(txt);
+            element.sendKeys(Keys.ARROW_DOWN +""+ Keys.ENTER);
+            testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
+
     }
 
 
@@ -291,5 +294,30 @@ public class TestBase {
          return isEnabled;
 
     }
+
+    public static void waitUntilElementIsVisible(String css, int timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(css)));
+            testBaseLogger.info("Element located at path --> " + css + " and waiting for " + timeout + " seconds"  );
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
+    public static void waitUntilElementIsVisibleByXpath(String xpath, int timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            testBaseLogger.info("Element located at xpath --> " + xpath + " and waiting for " + timeout + " seconds"  );
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
 
 }

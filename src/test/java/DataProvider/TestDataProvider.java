@@ -3,9 +3,9 @@ package DataProvider;
 import org.testng.annotations.DataProvider;
 import utils.TestBase;
 
-public class AddUserDataProvider extends TestBase {
+public class TestDataProvider extends TestBase {
 
-    public AddUserDataProvider() {
+    public TestDataProvider() {
     }
 
     @DataProvider(name="addEmployee")
@@ -13,4 +13,5 @@ public class AddUserDataProvider extends TestBase {
         Object[][] objTestData = readExcelData("src/main/resources/data/TestUserData.xls","addUser");
         return objTestData;
     }
+
 }
