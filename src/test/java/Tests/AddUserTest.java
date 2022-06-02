@@ -1,8 +1,8 @@
 package Tests;
 
-import PageObjects.AddUserPage.AddUserPage;
+import PageObjects.AddUserPage;
 import DataProvider.AddUserDataProvider;
-import PageObjects.LoginPage.LoginPage;
+import PageObjects.LoginPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -11,7 +11,7 @@ import utils.TestBase;
 import java.util.List;
 
 
-public class AddUserTest extends TestBase{
+public class AddUserTest extends TestBase {
 
     public LoginPage loginPage;
 
@@ -30,14 +30,11 @@ public class AddUserTest extends TestBase{
     }
 
 
-    @BeforeMethod
-    public void setupURL(){
+    @BeforeClass
+    public void setupURL() {
         setupUrl();
         loginPage = new LoginPage();
-        loginPage.enterUserName("Admin");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginBtn();
-
+        loginPage.loginToTheApplication(properties.getProperty("userName"), properties.getProperty("password"));
     }
 
 
@@ -58,8 +55,8 @@ public class AddUserTest extends TestBase{
         Thread.sleep(2000);
         addUserPage.saveEmployee();
         Thread.sleep(5000);
-      //  String curUrl = driver.getCurrentUrl();
-        Assert.assertEquals(driver.getCurrentUrl(),"https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
+        //  String curUrl = driver.getCurrentUrl();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
         System.out.println("Emp added successfully --> " + driver.getCurrentUrl());
 
     }

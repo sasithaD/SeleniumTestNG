@@ -1,7 +1,7 @@
 package Tests;
 
-import PageObjects.DeleteUserPage.DeleteUserPage;
-import PageObjects.LoginPage.LoginPage;
+import PageObjects.DeleteUserPage;
+import PageObjects.LoginPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;

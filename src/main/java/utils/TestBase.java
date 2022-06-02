@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,6 +24,7 @@ import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.logging.Logger;
+
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -80,7 +82,7 @@ public class TestBase {
                 driver = new ChromeDriver();
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver","configurations/drivers/geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "configurations/drivers/geckodriver.exe");
                 //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 //capabilities.setCapability("marionette",true);
                 driver = new FirefoxDriver();
@@ -98,7 +100,6 @@ public class TestBase {
         //  testBaseLogger.info("Unable to proceed without specific browser name in Config.properties file");
 
     }
-
 
 
     public static void setupUrl() {
@@ -158,7 +159,7 @@ public class TestBase {
 
     public static void selectValueFromAutoSuggestionListInTextField(WebElement element) {
         testBaseLogger.info("Clicking on element " + element + "");
-        element.sendKeys(Keys.ARROW_DOWN +""+ Keys.ENTER);
+        element.sendKeys(Keys.ARROW_DOWN + "" + Keys.ENTER);
         testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
     }
 
@@ -192,9 +193,9 @@ public class TestBase {
         }
     }
 
-    public static boolean isElementPresent(By by) {
+    public static boolean isElementPresent(By locator) {
         try {
-            driver.findElement(by);
+            driver.findElement(locator);
             return true;
         } catch (NoSuchElementException e) {
             return false;
@@ -240,6 +241,18 @@ public class TestBase {
         }
     }
 
+    public static void waitUntilVisibilityOfElement(By locator) {
+        try {
+            String timeout = properties.getProperty("waitingTime");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
     public String[][] readExcelData(String excelFileName, String sheetName) {
 
         String[][] excelDataList = null;
@@ -252,12 +265,12 @@ public class TestBase {
             int totalNoOfCols = excelSheet.getColumns();
             int totalNoOfRows = excelSheet.getRows();
 
-            excelDataList = new String[totalNoOfRows-1][totalNoOfCols];
+            excelDataList = new String[totalNoOfRows - 1][totalNoOfCols];
 
-            for (int i= 1 ; i < totalNoOfRows; i++) {
+            for (int i = 1; i < totalNoOfRows; i++) {
 
-                for (int j=0; j < totalNoOfCols; j++) {
-                    excelDataList[i-1][j] = excelSheet.getCell(j, i).getContents();
+                for (int j = 0; j < totalNoOfCols; j++) {
+                    excelDataList[i - 1][j] = excelSheet.getCell(j, i).getContents();
                 }
 
             }
@@ -277,15 +290,77 @@ public class TestBase {
     public static boolean isElementEnabled(WebElement element) {
         boolean isEnabled = true;
         testBaseLogger.info("Element Located " + element + "");
-        if (element.isEnabled()){
+        if (element.isEnabled()) {
             isEnabled = true;
             testBaseLogger.info("Element is enabled");
         } else {
             isEnabled = false;
             testBaseLogger.info("Element is disabled");
         }
-         return isEnabled;
+        return isEnabled;
+    }
 
+    public boolean isAlertPresent() {
+        try {
+            driver.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    public boolean isAlertPresent(String alertText) {
+        try {
+            Alert alert = driver.switchTo().alert();
+            return alert.getText().equalsIgnoreCase(alertText);
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    public boolean isPageLoaded(WebElement element) {
+        return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+    }
+
+    public void mouseMove(WebElement element) {
+        Actions act = new Actions(driver);
+        act.moveToElement(element).build().perform();
+    }
+
+    public void mouseMoveWithOffsets(WebElement element, int offsetX, int offsetY) {
+        Actions act = new Actions(driver);
+        act.moveToElement(element, offsetX, offsetY).build().perform();
+    }
+
+    public void mouseMoveWithOffsetsAndClick(WebElement element, int offsetX, int offsetY) {
+        Actions act = new Actions(driver);
+        act.moveToElement(element, offsetX, offsetY).click().build().perform();
+    }
+
+    public void moveAndClick(WebElement targetElement) {
+        Actions builder = new Actions(driver);
+        builder.moveToElement(targetElement).click(targetElement).perform();
+    }
+
+    public void javaScriptClick(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", element);
+    }
+
+    public void actionClick(WebElement targetElement) {
+        Actions builder = new Actions(driver);
+    }
+
+    public Dimension getWindowDimension() {
+        return driver.manage().window().getSize();
+    }
+
+    public void waitFor(Integer millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e1) {
+            Thread.currentThread().interrupt();
+        }
     }
 
 }
