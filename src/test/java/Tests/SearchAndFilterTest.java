@@ -1,8 +1,6 @@
 package Tests;
 
-import PageObjects.HomePage.HomePage;
-import PageObjects.LoginPage.LoginPage;
-import PageObjects.SearchAndFilterPage.SearchAndFilterPage;
+import PageObjects.SearchAndFilterPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;

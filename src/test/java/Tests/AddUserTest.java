@@ -1,13 +1,8 @@
 package Tests;
 
-import PageObjects.AddUserPage.AddUserPage;
-<<<<<<< HEAD
+import PageObjects.AddUserPage;
 import DataProvider.TestDataProvider;
-import PageObjects.LoginPage.LoginPage;
-=======
-import DataProvider.AddUserDataProvider;
 import PageObjects.LoginPage;
->>>>>>> 01523e1b3917eddfcf83256d8cf77fa59febe3f5
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -43,7 +38,7 @@ public class AddUserTest extends TestBase{
     }
 
 
-   //@Test(dataProvider="addEmployee")
+    //@Test(dataProvider="addEmployee")
     @Test(dataProvider = "addEmployee", dataProviderClass = TestDataProvider.class)
     public void addUser(String empNme, String username, String password, String conPassword, String empRole, String empStatus)  {
         AddUserPage addUserPage = PageFactory.initElements(driver, AddUserPage.class);
@@ -58,14 +53,8 @@ public class AddUserTest extends TestBase{
         addUserPage.typeEmployeeConfirmPassword(conPassword);
         addUserPage.waitUntilSave();
         addUserPage.saveEmployee();
-<<<<<<< HEAD
         addUserPage.waitUntilMenu();
         Assert.assertEquals(driver.getCurrentUrl(),"https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
-=======
-        Thread.sleep(5000);
-        //  String curUrl = driver.getCurrentUrl();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
->>>>>>> 01523e1b3917eddfcf83256d8cf77fa59febe3f5
         System.out.println("Emp added successfully --> " + driver.getCurrentUrl());
 
     }
