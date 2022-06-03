@@ -19,6 +19,19 @@ public class HomePage extends TestBase {
     @FindBy(xpath = PageElements.EMP_MANAGEMENT_MENU_BTN_SELECTOR)
     WebElement employeeManagementMenuBtn;
 
+    @FindBy(css = PageElements.KEBAB_BTN_SELECTOR)
+    WebElement kebabBtn;
+
+    @FindBy(css = PageElements.MORE_QUALIFICATIONS_BTN_SELECTOR)
+    WebElement moreQualificationBtn;
+
+    @FindBy(css = PageElements.MORE_SKILLS_BTN_SELECTOR)
+    WebElement moreSkillsBtn;
+
+    @FindBy(xpath = PageElements.FOOTER_ELEMENT_SELECTOR)
+    WebElement footerElement;
+
+
     public void selectOptionFromMainMenu(String option) {
         clickOnElement(driver.findElement(By.xpath("//*[@id='mainMenuFirstLevelUnorderedList']//b[contains(text(),'" + option + "')]")));
     }
@@ -31,5 +44,20 @@ public class HomePage extends TestBase {
 
     public void clickEmployeeManagementMenuBtn() {
         clickOnElement(employeeManagementMenuBtn);
+    }
+
+    public void selectMoreItems() {
+        waitUntilVisibilityOfElement(By.cssSelector(".expand-icon"));
+        clickOnElement(kebabBtn);
+        waitFor(3000);
+        mouseMove(moreQualificationBtn);
+        waitFor(2000);
+        moveAndClick(moreSkillsBtn);
+    }
+
+    public void scrollForElementView() {
+        waitUntilVisibilityOfElement(By.cssSelector(".expand-icon"));
+        scrollUntilElementViewJS(footerElement);
+        waitFor(2000);
     }
 }

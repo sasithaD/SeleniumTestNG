@@ -11,6 +11,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -342,7 +344,7 @@ public class TestBase {
         builder.moveToElement(targetElement).click(targetElement).perform();
     }
 
-    public void javaScriptClick(WebElement element) {
+    public static void javaScriptClick(WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
     }
@@ -361,6 +363,33 @@ public class TestBase {
         } catch (InterruptedException e1) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public static void checkBoxJSSelect(WebElement element) {
+        if (!element.isSelected()) {
+            javaScriptClick(element);
+        }
+    }
+
+    public static void checkBoxJSDisSelect(WebElement element) {
+        if (element.isSelected()) {
+            javaScriptClick(element);
+        }
+    }
+
+    public static void scrollUntilElementView(WebElement element) {
+        testBaseLogger.info("\n Scroll until visibility of element : " + element + "");
+        Coordinates coordinate = ((Locatable) element).getCoordinates();
+        coordinate.onPage();
+        coordinate.inViewPort();
+        testBaseLogger.info("Successfully scrolled");
+    }
+
+    public static void scrollUntilElementViewJS(WebElement element) {
+        testBaseLogger.info("\n Scroll until visibility of element : " + element + "");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        testBaseLogger.info("Successfully scrolled");
     }
 
 }
