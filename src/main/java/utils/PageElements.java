@@ -51,9 +51,17 @@ public class PageElements {
     public static final String COL_NUMBER_RECORD_SELECTOR = "td[colspan='5']";
 
     /*-----------------Search & Filter Page Elements--------------*/
-    public static final String TEXT_QUICK_SEARCH_SELECTOR = "input[id='searchSystemUser_userName']";
+    public static final String TEXT_QUICK_SEARCH_SELECTOR = "input[id='menuQuickSearch_menuQuickSearch']";
     public static final String LIST_SEARCH_SELECTOR = "ul[id='menuQuickSearchResultList']";
-    public static final String BTN_FILTER_SELECTOR = "a[class='employee-navbar-button action-icon']"; // ng-click="navbar.filter()" class='employee-navbar-button action-icon'
-    public static final String FORM_EMP_SEARCH_SELECTOR = "form[id='frmEmployeeSearch']";
+    public static final String BTN_FILTER_SELECTOR =  "//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.filter()']" ; //  "a[class='employee-navbar-button action-icon']"; // ng-click="navbar.filter()" class='employee-navbar-button action-icon'
+    public static final String FORM_EMP_SEARCH_SELECTOR =  "//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']"; //"form[id='frmEmployeeSearch']";
     public static final String MENU_EMP_MANGMNT_SELECTOR = "a[href='#/pim/employees']";
+    public static final String TEXT_EMP_NAME_FILTER_SELECTOR = "//*[@class='modal-content']//input[@id='emp_search_mdl_employee_name_filter_value']";
+    public static final String BTN_SEARCH_FILTER_SELECTOR = "//*[@class='modal-footer']//*[@ng-click='modal.search()']";
+    public static final String TABLE_EMPLOYEE_SELECTOR =    "//*[@id='employeeListTable']";     /*   "//*[@class='pim-container']//table[@id='employeeListTable']"; */
+    public static final String TBL_EMP_NAME_SELECTOR =    "//*[@id='employeeListTable']/tbody/tr/td[3]";
+    public static final String TXT_EMP_PER_FIRST_NAME =    "input[id='firstName']";
+    public static final String TXT_EMP_PER_LAST_NAME =    "input[id='lastName']";
+    public static final String DRP_SUB_UNIT = "//input[@class='select-dropdown' and @data-activates= 'select-options-303db02e-497d-3a76-888c-de0f80de65ba' ]" ;
+
 }

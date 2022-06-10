@@ -1,13 +1,14 @@
 package Tests;
 
 import PageObjects.SearchAndFilterPage;
+import RetryAnalyzer.RetryAnalyzer;
+import RetryAnalyzer.RetryTestListener;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import utils.TestBase;
+
+@Listeners(RetryTestListener.class)
 
 public class SearchAndFilterTest extends TestBase {
 
@@ -28,7 +29,6 @@ public class SearchAndFilterTest extends TestBase {
 
     @Test
     public void searchForItem() {
-        searchAndFilterPage = PageFactory.initElements(driver, SearchAndFilterPage.class);
         searchAndFilterPage.searchForRandomItem("Employee Tasks");
         searchAndFilterPage.waitTillPageLoad();
         Assert.assertEquals(driver.getCurrentUrl(), "https://chamikag-trials7501.orangehrmlive.com/client/#/noncore/onboarding/viewEmployeeTasks/reset/1");
@@ -36,21 +36,56 @@ public class SearchAndFilterTest extends TestBase {
 
     @Test
     public void searchForRandomItem() {
-        searchAndFilterPage = PageFactory.initElements(driver, SearchAndFilterPage.class);
         searchAndFilterPage.searchForRandomItem("a");
         searchAndFilterPage.waitTillPageLoad();
         Assert.assertEquals(driver.getCurrentUrl(), "https://chamikag-trials7501.orangehrmlive.com/client/#/admin/systemUsers");
     }
 
-    @Test
-    public void filterByEmployee() {
-        searchAndFilterPage = PageFactory.initElements(driver, SearchAndFilterPage.class);
+    @Test (priority=1, retryAnalyzer = RetryAnalyzer.class)
+    public void filterByEmployeeName() throws InterruptedException {
+
+        String nm, fname, lname, fullname;
         searchAndFilterPage.clickMenuEmpManagement();
         searchAndFilterPage.waitTillFilterIcon();
+
         searchAndFilterPage.clickFilterBtn();
-        searchAndFilterPage.waitTillEmpSearchForm();
-        //searchAndFilterPage.waitTillPageLoad();
-        //Assert.assertEquals(driver.getCurrentUrl(), "https://chamikag-trials7501.orangehrmlive.com/client/#/admin/systemUsers");
+        waitFor(3000);
+        searchAndFilterPage.typeEmployeeName("Brody Alan");
+        waitFor(3000);
+        searchAndFilterPage.clickOnSearch();
+        waitFor(5000);
+        searchAndFilterPage.waitTillEmpSearchResultTableForm();
+        captureScreenshotOnFailure(driver, "screenshot_2");
+        Assert.assertEquals(searchAndFilterPage.getEmpName(), "Brody Alann");
+        nm = searchAndFilterPage.getEmpName();
+        System.out.println("Emp name in table --> " + nm) ;
+        searchAndFilterPage.clickOnResultTable();
+        waitFor(1000);
+        fname = searchAndFilterPage.getEmpFirstName();
+        lname = searchAndFilterPage.getEmpLastName();
+        fullname = fname + " " + lname;
+        Assert.assertEquals(fullname, "Brody Alan");
+
+    }
+
+    @Test (priority=2)
+    public void filterByEmployeeAllInfo() {
+
+        searchAndFilterPage.clickMenuEmpManagement();
+        searchAndFilterPage.waitTillFilterIcon();
+
+        searchAndFilterPage.clickFilterBtn();
+        waitFor(3000);
+        searchAndFilterPage.typeEmployeeName("Brody Alan");
+        waitFor(3000);
+        searchAndFilterPage.selectSubUnit("QA Team");
+        waitFor(3000);
+        searchAndFilterPage.clickOnSearch();
+        waitFor(5000);
+        searchAndFilterPage.waitTillEmpSearchResultTableForm();
+        Assert.assertEquals(searchAndFilterPage.getEmpName(), "Brody Alan");
+        searchAndFilterPage.clickOnResultTable();
+        waitFor(1000);
     }
 
     @AfterTest
