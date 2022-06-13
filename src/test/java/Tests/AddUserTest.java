@@ -1,7 +1,7 @@
 package Tests;
 
-import PageObjects.AddUserPage.AddUserPage;
-import DataProvider.AddUserDataProvider;
+import PageObjects.AddUserPage;
+import DataProvider.TestDataProvider;
 import PageObjects.LoginPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -39,24 +39,22 @@ public class AddUserTest extends TestBase{
 
 
     //@Test(dataProvider="addEmployee")
-    @Test(dataProvider = "addEmployee", dataProviderClass = AddUserDataProvider.class)
-    public void addUser(String empNme, String username, String password, String conPassword, String empRole, String empStatus) throws InterruptedException {
-        Thread.sleep(2000);
+    @Test(dataProvider = "addEmployee", dataProviderClass = TestDataProvider.class)
+    public void addUser(String empNme, String username, String password, String conPassword, String empRole, String empStatus)  {
         AddUserPage addUserPage = PageFactory.initElements(driver, AddUserPage.class);
         addUserPage.clickMenuAdmin();
         addUserPage.clickAddEmployee();
-        Thread.sleep(2000);
+        addUserPage.waitUntilForm();
         addUserPage.selectEmployeeRole(empRole);
         addUserPage.typeEmpName(empNme);
         addUserPage.typeEmployeeNameUsername(username);
         addUserPage.selectEmployeeStatus(empStatus);
         addUserPage.typeEmployeePassword(password);
         addUserPage.typeEmployeeConfirmPassword(conPassword);
-        Thread.sleep(2000);
+        addUserPage.waitUntilSave();
         addUserPage.saveEmployee();
-        Thread.sleep(5000);
-        //  String curUrl = driver.getCurrentUrl();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
+        addUserPage.waitUntilMenu();
+        Assert.assertEquals(driver.getCurrentUrl(),"https://opensource-demo.orangehrmlive.com/index.php/admin/viewSystemUsers");
         System.out.println("Emp added successfully --> " + driver.getCurrentUrl());
 
     }

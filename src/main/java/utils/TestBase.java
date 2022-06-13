@@ -1,6 +1,5 @@
 package utils;
 
-
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
@@ -148,6 +145,16 @@ public class TestBase {
         return elementText;
     }
 
+    public static void selectValueFromAutoSuggestionListInTextField(WebElement element, String txt) {
+        element.clear();
+        testBaseLogger.info("\nTyping on element:  " + element + " value: " + txt);
+        element.sendKeys(txt);
+        element.sendKeys(Keys.ARROW_DOWN + "" + Keys.ENTER);
+        testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
+
+    }
+
+
     public static String getElementTextBy(By by) {
         testBaseLogger.info("Retrieving the element text of " + driver.findElement(by) + "");
         String elementText = driver.findElement(by).getText();
@@ -157,12 +164,6 @@ public class TestBase {
             testBaseLogger.info("No text found on specific element " + driver.findElement(by) + "");
         }
         return elementText;
-    }
-
-    public static void selectValueFromAutoSuggestionListInTextField(WebElement element) {
-        testBaseLogger.info("Clicking on element " + element + "");
-        element.sendKeys(Keys.ARROW_DOWN + "" + Keys.ENTER);
-        testBaseLogger.info("Item was successfully selected from the Auto suggestion list");
     }
 
     public void selectDropDownByText(WebElement element, String text) {
@@ -249,6 +250,18 @@ public class TestBase {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
+    public static void waitUntilElementIsHidden(By locator) {
+        try {
+            String timeout = properties.getProperty("waitingTime");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        } catch (ElementNotInteractableException e) {
             testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
         } catch (TimeoutException e) {
             testBaseLogger.info("Failed. Due to : " + e.getLocalizedMessage() + "");
@@ -390,6 +403,41 @@ public class TestBase {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
         testBaseLogger.info("Successfully scrolled");
+    }
+
+    public static void waitUntilElementIsVisibleByCss(String css, int timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(css)));
+            testBaseLogger.info("Element located at path --> " + css + " and waiting for " + timeout + " seconds");
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
+    public static void waitUntilElementIsVisibleByXpath(String xpath, int timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            testBaseLogger.info("Element located at xpath --> " + xpath + " and waiting for " + timeout + " seconds");
+        } catch (NoSuchElementException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        } catch (TimeoutException e) {
+            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
+    public void switchToNewWindow() {
+        String initialWindow = driver.getWindowHandle();
+        for (String newWindow : driver.getWindowHandles()) {
+            if (!initialWindow.equalsIgnoreCase(newWindow)) {
+                testBaseLogger.info("Switch to new Window : " + newWindow);
+                driver.switchTo().window(newWindow);
+                break;
+            }
+        }
     }
 
 }
