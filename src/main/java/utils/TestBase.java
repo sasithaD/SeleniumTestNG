@@ -10,12 +10,14 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -438,6 +440,37 @@ public class TestBase {
                 break;
             }
         }
+    }
+
+    public String javaScriptGetText(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        String text = (String) executor.executeScript("return arguments[0].value", element);
+        if(!text.isEmpty())
+            testBaseLogger.info("Retrieving text successful");
+        else
+            testBaseLogger.info("No text found on specific element " + element + "");
+        return text;
+    }
+
+    public static void captureScreenshotOnFailure(WebDriver driver,String screenshotName)
+    {
+        try
+        {
+            TakesScreenshot takesScreenshot = (TakesScreenshot)driver;
+            File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            FileHandler.copy(source, new File("src/main/resources/screenshots/"+screenshotName+".png"));
+            testBaseLogger.info("Screenshot successfully taken");
+        }
+        catch (Exception e)
+        {
+            testBaseLogger.info("Failed Screenshot taking due to : " + e.getLocalizedMessage() + "");
+        }
+    }
+
+    public static String getPropertyFileValue(String propKey) {
+        readPropertyFile();
+        String propertyValue = properties.getProperty(propKey);
+        return propertyValue;
     }
 
 }

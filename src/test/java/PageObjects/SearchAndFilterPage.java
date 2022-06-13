@@ -14,14 +14,32 @@ public class SearchAndFilterPage extends TestBase {
     @FindBy(css = PageElements.LIST_SEARCH_SELECTOR)
     WebElement listSearch;
 
-    @FindBy(css = PageElements.BTN_FILTER_SELECTOR)
+    @FindBy(xpath = PageElements.BTN_FILTER_SELECTOR)
     WebElement btnFilter;
 
-    @FindBy(css = PageElements.FORM_EMP_SEARCH_SELECTOR)
+    @FindBy(xpath = PageElements.FORM_EMP_SEARCH_SELECTOR)
     WebElement formEmpSearch;
 
     @FindBy(css = PageElements.MENU_EMP_MANGMNT_SELECTOR)
     WebElement menuEmpMngmnt;
+
+    @FindBy(xpath = PageElements.TEXT_EMP_NAME_FILTER_SELECTOR)
+    WebElement txtEmpName;
+
+    @FindBy(xpath = PageElements.BTN_SEARCH_FILTER_SELECTOR)
+    WebElement btnSearch;
+
+    @FindBy(xpath = PageElements.TBL_EMP_NAME_SELECTOR)
+    WebElement txtEmpNameInTbl;
+
+    @FindBy(css = PageElements.TXT_EMP_PER_FIRST_NAME)
+    WebElement txtFirstName;
+
+    @FindBy(css = PageElements.TXT_EMP_PER_LAST_NAME)
+    WebElement txtLastName;
+
+    @FindBy(xpath = PageElements.DRP_SUB_UNIT)
+    WebElement drpSubUnit;
 
     @FindBy(css = PageElements.USERNAME_SELECTOR)
     WebElement txtUsername;
@@ -50,11 +68,54 @@ public class SearchAndFilterPage extends TestBase {
     }
 
     public void waitTillFilterIcon(){
-        waitUntilElementIsVisibleByXpath("//*[@id='ribbon-actions']/ui-view/ul/li[3]/a", 5);
+        waitUntilElementIsVisibleByXpath("//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.search()']", 5); // "//*[@id='ribbon-actions']/ui-view/ul/li[3]/a"
     }
 
     public void waitTillEmpSearchForm(){
-        waitUntilElementIsVisibleByXpath("//*[@id='employee_list_search_modal']/div[1]/div", 5);
+        waitUntilElementIsVisibleByXpath("//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']", 3);
+    }
+
+    public void waitTillEmpSearchResultTableForm(){
+        waitUntilElementIsVisibleByXpath("//*[@id='employeeListTable']", 5);
+    }
+
+    public void clickMenuEmpManagement(){
+        clickOnElement(menuEmpMngmnt);
+    }
+
+    public String getEmpName(){
+        String nm = getElementText(txtEmpNameInTbl);
+        return nm;
+    }
+
+    public String getEmpFirstName(){
+        String fnm = javaScriptGetText(txtFirstName);
+        return fnm;
+    }
+
+    public String getEmpLastName(){
+        String lnm = javaScriptGetText(txtLastName);
+        return lnm;
+    }
+
+    public void clickOnResultTable(){
+         clickOnElement(txtEmpNameInTbl);
+    }
+
+    public void clickFilterBtn(){
+       javaScriptClick(btnFilter);
+    }
+
+    public void typeEmployeeName(String name){
+        typeOnElement(txtEmpName, name);
+    }
+
+    public void selectSubUnit(String value){
+        selectValueFromAutoSuggestionListInTextField(drpSubUnit, value);
+    }
+
+    public void clickOnSearch(){
+        javaScriptClick(btnSearch);
     }
 
     public void enterUserName(String userName) {
@@ -68,16 +129,6 @@ public class SearchAndFilterPage extends TestBase {
     public void clickLoginBtn(){
         clickOnElement(btnLogin);
     }
-
-    public void clickMenuEmpManagement(){
-        clickOnElement(menuEmpMngmnt);
-    }
-
-    public void clickFilterBtn(){
-        clickOnElement(btnFilter);
-    }
-
-
 
 
     public void loginToTheApplication(String userName, String password) {
