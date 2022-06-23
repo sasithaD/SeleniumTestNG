@@ -1,5 +1,6 @@
 package Tests;
 
+import Model.User;
 import PageObjects.AddUserPage;
 import DataProvider.TestDataProvider;
 import PageObjects.LoginPage;
@@ -58,7 +59,6 @@ public class AddUserTest extends TestBase{
         System.out.println("Emp added successfully --> " + driver.getCurrentUrl());
 
     }
-
 
 
 /*
