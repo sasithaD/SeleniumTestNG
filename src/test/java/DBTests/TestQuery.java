@@ -1,5 +1,7 @@
 package DBTests;
 
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import utils.TestBase;
 import utils.connector.DBConnector;
@@ -17,23 +19,31 @@ public class TestQuery extends TestBase {
     private Statement stmt = null;
     private ResultSet resultSet = null;
 
+    @BeforeSuite
+    public void setUpDBConnection() {
+
+        con = dbConnector.getConnection(driverName, dbUrl, username, password);
+    }
+
     @Test
     public void TestDataRetrievalFromDB() throws SQLException {
 
-        con = dbConnector.getConnection(driverName, dbUrl, username, password);
         stmt = con.createStatement();
-        resultSet = stmt.executeQuery("select *  from customer;"); // need to change, dummy query
+        resultSet = stmt.executeQuery("select * from customer where rownum <= 5;"); // need to change, dummy query
 
         ResultSetMetaData rsmd = resultSet.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
+        int columnCount = rsmd.getColumnCount();
 
         while (resultSet.next()) {
-            for(int i = 1; i < columnsNumber; i++)
+            for(int i = 1; i < columnCount; i++)
                 System.out.print(resultSet.getString(i) + " ");
             System.out.println();
         }
 
-        con.close();
+    }
 
+    @AfterSuite
+    public void closeDBConnection() throws SQLException {
+        con.close();
     }
 }
