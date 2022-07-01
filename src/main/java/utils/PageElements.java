@@ -72,4 +72,35 @@ public class PageElements {
     public static final String ADD_EMP_BTN_SELECTOR = "#addEmployeeButton";
     public static final String ADD_EMP_TOGGLE_BTN_SELECTOR = "//*[@id='hasLoginDetails']";
 
+    /*-----------------Create Report Page Elements--------------*/
+    public static final String MENU_RPT_SELECTOR = "a[href='#/reports_and_analytics/catalogue']";
+    public static final String BTN_NEW_RPT = "//button[@class='oxd-button oxd-button--long oxd-button--secondary with-icon table-header-action-btn w-100']";
+    public static final String BTN_ADD_RPT = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary add-report-button-margin']";
+    public static final String TXT_RPT_NAME = "//input[@id='pimDefineReportName']";
+    public static final String BTN_NEXT = "//button[@class='btn waves-effect waves-light right']";
+    public static final String CHK_EMP_NAME = "//label[@for='selectedFilters_employee_name_withgroup']";
+    public static final String CHK_EMP_GENDER = "//label[@for='selectedFilters_gender_withgroup']";
+    public static final String CHK_EMP_STATUS = "//label[@for='selectedFilters_employment_status_withgroup']";
+    public static final String CHK_JOB_TITLE = "//label[@for='selectedFilters_job_title_withgroup']";
+    public static final String BTN_FIELD_GROUP = "//button[@id='display-group-dropdown-trigger']";
+    public static final String DRP_PERSONAL = "//a[@ng-click='vm.toggleSelectedDisplayGroup(displayGroupId, true)' and text()='Personal']";
+    public static final String DRP_JOB = "//a[@ng-click='vm.toggleSelectedDisplayGroup(displayGroupId, true)' and text()='Job']";
+    public static final String CHK_PER_EMP_ID = "//label[@for='selectedDisplayFields_9']";
+    public static final String CHK_PER_EMP_NAME = "//label[@for='selectedDisplayFields_9_1']";
+    public static final String CHK_PER_EMP_GENDER = "//label[@for='selectedDisplayFields_15']";
+    public static final String CHK_JOB_EMP_STATUS = "//label[@for='selectedDisplayFields_78']";
+    public static final String CHK_JOB_EMP_TITLE = "//label[@for='selectedDisplayFields_77']";
+    public static final String BTN_SAVE = "//button[@class='btn waves-effect waves-light' and text()='Save']";
+    public static final String BTN_PAGINATION = "//button[@class='btn dropdown-toggle' and @aria-owns='bs-select-5']";
+    public static final String OPT_PAGINATION_MAX = "//a[@role='option' and @id='bs-select-5-3']";
+    public static final String FILTER_EMP_STATUS = "#report_multiselect_filter_employment_status input";
+    public static final String FILTER_JOB_TITLE = "#report_multiselect_filter_job_title input";
+    public static final String BTN_GENERATE = "//button[@translate='Generate']";
+    public static final String TBL_REPORT_ROWS = "//*[@id='pim_report_table']//tbody//tr";
+
+
+
+
+
+
 }
