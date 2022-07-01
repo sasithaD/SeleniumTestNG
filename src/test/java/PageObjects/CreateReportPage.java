@@ -194,4 +194,12 @@ public class CreateReportPage extends TestBase {
         return hasName;
     }
 
+    public void isOwnNameOnGeneratedReport(String thisName){
+        boolean hasName = checkName(thisName);
+        if (hasName == true)
+            System.out.println("Invalid result");
+        else
+            System.out.println("Valid result");
+    }
+
 }

@@ -36,7 +36,7 @@ public class CreateReportTest extends TestBase {
         createReportPage.clickNewReport();
         createReportPage.clickAddReport();
         waitFor(8000);
-        createReportPage.sendReportName("New Report 12");
+        createReportPage.sendReportName("New Report 18");
         waitFor(3000);
         createReportPage.clickNext();
         createReportPage.checkEmployeeName();
@@ -62,11 +62,7 @@ public class CreateReportTest extends TestBase {
         createReportPage.choseJobTitle("Software Development Manager");
         createReportPage.clickGenerate();
         waitFor(1000);
-        boolean hasName = createReportPage.checkName("Chamika");
-        if (hasName == true)
-            System.out.println("Invalid result");
-        else
-            System.out.println("Valid result");
+        createReportPage.isOwnNameOnGeneratedReport("Chamika");
 
 
     }
