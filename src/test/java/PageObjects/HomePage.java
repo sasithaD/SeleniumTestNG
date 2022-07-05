@@ -31,6 +31,9 @@ public class HomePage extends TestBase {
     @FindBy(xpath = PageElements.FOOTER_ELEMENT_SELECTOR)
     WebElement footerElement;
 
+    @FindBy(xpath = PageElements.REPORT_ANALYTICS_MENU_BTN_SELECTOR)
+    WebElement reportAnalyticsMenuBtn;
+
 
     public void selectOptionFromMainMenu(String option) {
         clickOnElement(driver.findElement(By.xpath("//*[@id='mainMenuFirstLevelUnorderedList']//b[contains(text(),'" + option + "')]")));
@@ -44,6 +47,10 @@ public class HomePage extends TestBase {
 
     public void clickEmployeeManagementMenuBtn() {
         clickOnElement(employeeManagementMenuBtn);
+    }
+
+    public void clickReportAnalyticsBtn() {
+        clickOnElement(reportAnalyticsMenuBtn);
     }
 
     public void selectMoreItems() {
