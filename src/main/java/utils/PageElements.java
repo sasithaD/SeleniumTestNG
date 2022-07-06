@@ -31,6 +31,8 @@ public class PageElements {
     public static final String MORE_QUALIFICATIONS_BTN_SELECTOR = "a[data-automation-id='more_menu_child_menu_admin_Qualifications']";
     public static final String MORE_SKILLS_BTN_SELECTOR = "a[data-automation-id='more_menu_child_menu_admin_viewSkills']";
     public static final String FOOTER_ELEMENT_SELECTOR = "//*[contains(text(),'COVID-19 Report')]";
+    public static final String REPORT_ANALYTICS_MENU_BTN_SELECTOR = "//*[@id='left_menu_item_336']";
+    public static final String ATTENDANCE_MENU_BTN_SELECTOR = "#menu_item_291:nth-child(1) span";
 
     /*-----------------Add User Page Elements--------------*/
     public static final String MENU_ADMIN_SELECTOR = "a[id='menu_admin_viewAdminModule']";
@@ -57,16 +59,16 @@ public class PageElements {
     /*-----------------Search & Filter Page Elements--------------*/
     public static final String TEXT_QUICK_SEARCH_SELECTOR = "input[id='menuQuickSearch_menuQuickSearch']";
     public static final String LIST_SEARCH_SELECTOR = "ul[id='menuQuickSearchResultList']";
-    public static final String BTN_FILTER_SELECTOR =  "//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.filter()']" ; //  "a[class='employee-navbar-button action-icon']"; // ng-click="navbar.filter()" class='employee-navbar-button action-icon'
-    public static final String FORM_EMP_SEARCH_SELECTOR =  "//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']"; //"form[id='frmEmployeeSearch']";
+    public static final String BTN_FILTER_SELECTOR = "//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.filter()']"; //  "a[class='employee-navbar-button action-icon']"; // ng-click="navbar.filter()" class='employee-navbar-button action-icon'
+    public static final String FORM_EMP_SEARCH_SELECTOR = "//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']"; //"form[id='frmEmployeeSearch']";
     public static final String MENU_EMP_MANGMNT_SELECTOR = "a[href='#/pim/employees']";
     public static final String TEXT_EMP_NAME_FILTER_SELECTOR = "//*[@class='modal-content']//input[@id='emp_search_mdl_employee_name_filter_value']";
     public static final String BTN_SEARCH_FILTER_SELECTOR = "//*[@class='modal-footer']//*[@ng-click='modal.search()']";
-    public static final String TABLE_EMPLOYEE_SELECTOR =    "//*[@id='employeeListTable']";     /*   "//*[@class='pim-container']//table[@id='employeeListTable']"; */
-    public static final String TBL_EMP_NAME_SELECTOR =    "//*[@id='employeeListTable']/tbody/tr/td[3]";
-    public static final String TXT_EMP_PER_FIRST_NAME =    "input[id='firstName']";
-    public static final String TXT_EMP_PER_LAST_NAME =    "input[id='lastName']";
-    public static final String DRP_SUB_UNIT = "//input[@class='select-dropdown' and @data-activates= 'select-options-303db02e-497d-3a76-888c-de0f80de65ba' ]" ;
+    public static final String TABLE_EMPLOYEE_SELECTOR = "//*[@id='employeeListTable']";     /*   "//*[@class='pim-container']//table[@id='employeeListTable']"; */
+    public static final String TBL_EMP_NAME_SELECTOR = "//*[@id='employeeListTable']/tbody/tr/td[3]";
+    public static final String TXT_EMP_PER_FIRST_NAME = "input[id='firstName']";
+    public static final String TXT_EMP_PER_LAST_NAME = "input[id='lastName']";
+    public static final String DRP_SUB_UNIT = "//input[@class='select-dropdown' and @data-activates= 'select-options-303db02e-497d-3a76-888c-de0f80de65ba' ]";
 
     /*-----------------Employee Management Page Elements--------------*/
     public static final String ADD_EMP_BTN_SELECTOR = "#addEmployeeButton";
@@ -107,4 +109,13 @@ public class PageElements {
 
 
 
+    /*-----------------Report Analytics Page Elements--------------*/
+    public static final String PARTICIPATION_SESSION_INFO_BTN_SELECTOR = ".reports-accordion-content-row:nth-child(1) div[data-test='reportItem3'] div";
+    public static final String ROWS_PER_PAGE_DROPDOWN_SELECTOR = "//li[contains(@class,'page-size')]//input";
+    public static final String NEXT_PAGE_BTN_SELECTOR = "//a[@title='Next Page']";
+    public static final String PAGINATION_SUMMARY_SELECTOR = ".pagination .summary";
+    public static final String TABLE_SELECTOR = "//*[@id='pim_report_table']";
+
+    /*-----------------Attendance Page Elements--------------*/
+    public static final String DOWNLOAD_PDF_BTN_SELECTOR = "button[data-icon='ohrm_file_pdf']";
 }

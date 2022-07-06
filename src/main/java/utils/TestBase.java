@@ -1,5 +1,7 @@
 package utils;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -445,24 +447,20 @@ public class TestBase {
     public String javaScriptGetText(WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         String text = (String) executor.executeScript("return arguments[0].value", element);
-        if(!text.isEmpty())
+        if (!text.isEmpty())
             testBaseLogger.info("Retrieving text successful");
         else
             testBaseLogger.info("No text found on specific element " + element + "");
         return text;
     }
 
-    public static void captureScreenshotOnFailure(WebDriver driver,String screenshotName)
-    {
-        try
-        {
-            TakesScreenshot takesScreenshot = (TakesScreenshot)driver;
+    public static void captureScreenshotOnFailure(WebDriver driver, String screenshotName) {
+        try {
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
             File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-            FileHandler.copy(source, new File("src/main/resources/screenshots/"+screenshotName+".png"));
+            FileHandler.copy(source, new File("src/main/resources/screenshots/" + screenshotName + ".png"));
             testBaseLogger.info("Screenshot successfully taken");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             testBaseLogger.info("Failed Screenshot taking due to : " + e.getLocalizedMessage() + "");
         }
     }
@@ -471,6 +469,14 @@ public class TestBase {
         readPropertyFile();
         String propertyValue = properties.getProperty(propKey);
         return propertyValue;
+    }
+
+    public static String readPDF(String pdfFilePath) throws IOException {
+        File file = new File(pdfFilePath);
+        FileInputStream inputFile = new FileInputStream(file);
+        PDDocument documentObject = PDDocument.load(inputFile);
+        PDFTextStripper objPDFStrip = new PDFTextStripper();
+        return objPDFStrip.getText(documentObject);
     }
 
 }

@@ -10,10 +10,10 @@ import java.sql.*;
 
 public class TestQuery extends TestBase {
 
-    private static String driverName = TestBase.getPropertyFileValue("driverName");
-    private static String dbUrl = TestBase.getPropertyFileValue("dbUrl");
-    private static String username = TestBase.getPropertyFileValue("dbUsername");
-    private static String password = TestBase.getPropertyFileValue("dbPassword");
+    private static String driverName = properties.getProperty("driverName");
+    private static String dbUrl = properties.getProperty("dbUrl");
+    private static String username = properties.getProperty("dbUsername");
+    private static String password = properties.getProperty("dbPassword");
     private DBConnector dbConnector = new DBConnector();
     private Connection con = null;
     private Statement stmt = null;
