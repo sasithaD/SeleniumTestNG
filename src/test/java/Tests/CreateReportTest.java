@@ -36,7 +36,7 @@ public class CreateReportTest extends TestBase {
         createReportPage.clickNewReport();
         createReportPage.clickAddReport();
         waitFor(8000);
-        createReportPage.sendReportName("New Report 18");
+        createReportPage.sendReportName("New Report 19");
         waitFor(3000);
         createReportPage.clickNext();
         createReportPage.checkEmployeeName();

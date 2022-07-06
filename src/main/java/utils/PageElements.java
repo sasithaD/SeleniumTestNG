@@ -98,6 +98,10 @@ public class PageElements {
     public static final String BTN_GENERATE = "//button[@translate='Generate']";
     public static final String TBL_REPORT_ROWS = "//*[@id='pim_report_table']//tbody//tr";
 
+    /*-----------------Travel Request Page Elements--------------*/
+    public static final String MENU_TRAVEL_SELECTOR = "a[href='/client/#/noncore/expense/viewEmployeeEstimateRequest']";
+    public static final String BTN_ASSIGN_TRAVEL_REQST = "//a[@id='addItemBtn']"; //"div[id='list_item_add']"; //"a[id='addItemBtn']";
+
 
 
 
