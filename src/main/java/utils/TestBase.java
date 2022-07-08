@@ -1,5 +1,10 @@
 package utils;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.Keys;
@@ -19,13 +24,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.time.Duration;
+import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import jxl.Sheet;
@@ -409,11 +411,11 @@ public class TestBase {
         testBaseLogger.info("Successfully scrolled");
     }
 
-    public static void waitUntilElementIsVisibleByCss(String css, int timeout) {
+    public static void waitForElementVisibilityBy(By locator, int timeout) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(css)));
-            testBaseLogger.info("Element located at path --> " + css + " and waiting for " + timeout + " seconds");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            testBaseLogger.info("Element located at path --> " + locator + " and waiting for " + timeout + " seconds");
         } catch (NoSuchElementException e) {
             testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
         } catch (TimeoutException e) {
@@ -421,17 +423,6 @@ public class TestBase {
         }
     }
 
-    public static void waitUntilElementIsVisibleByXpath(String xpath, int timeout) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(timeout)));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-            testBaseLogger.info("Element located at xpath --> " + xpath + " and waiting for " + timeout + " seconds");
-        } catch (NoSuchElementException e) {
-            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
-        } catch (TimeoutException e) {
-            testBaseLogger.info("Failed Due to : " + e.getLocalizedMessage() + "");
-        }
-    }
 
     public void switchToNewWindow() {
         String initialWindow = driver.getWindowHandle();
@@ -465,9 +456,24 @@ public class TestBase {
         }
     }
 
-    public static String getPropertyFileValue(String propKey) {
-        readPropertyFile();
-        String propertyValue = properties.getProperty(propKey);
+    public static String getPropertyFileValue(String propertyKey) {
+
+        String propertyValue = "";
+
+        if(!propertyKey.isEmpty()) {
+            readPropertyFile();
+            propertyValue = properties.getProperty(propertyKey);
+
+            if(propertyValue != null)
+                testBaseLogger.info("Successfully retrieved Property value |" + propertyValue + "| for Property key |" + propertyKey + "|");
+            else {
+                System.out.println("Provided Property Key is either invalid or incorrect --> " + propertyKey);
+                testBaseLogger.info("Error occured while trying to retrieve the Property value " + propertyKey);
+            }
+
+        } else
+            System.out.println("Property Key is not provided");
+
         return propertyValue;
     }
 
@@ -477,6 +483,24 @@ public class TestBase {
         PDDocument documentObject = PDDocument.load(inputFile);
         PDFTextStripper objPDFStrip = new PDFTextStripper();
         return objPDFStrip.getText(documentObject);
+    }
+
+    public List<String[]> readCSV(String csvFileName, char separator) throws IOException, CsvException {
+
+        List<String[]> csvData;
+        CSVParser csvParser = new CSVParserBuilder().withSeparator(separator).build();
+        try(CSVReader reader = new CSVReaderBuilder(new FileReader(csvFileName))
+                .withCSVParser(csvParser)
+                .withSkipLines(1)
+                .build()){
+            csvData = reader.readAll();
+            csvData.forEach(x -> System.out.println(Arrays.toString(x)));
+        } catch (IOException | CsvException e) {
+            testBaseLogger.info("Error reading CSV File");
+            e.printStackTrace();
+            throw e;
+        }
+        return csvData;
     }
 
 }

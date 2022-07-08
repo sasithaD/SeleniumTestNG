@@ -1,8 +1,8 @@
 package Tests;
 
 import PageObjects.SearchAndFilterPage;
-import RetryAnalyzer.RetryAnalyzer;
-import RetryAnalyzer.RetryTestListener;
+import utils.retryanalyzer.RetryAnalyzer;
+import utils.retryanalyzer.RetryTestListener;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -55,7 +55,7 @@ public class SearchAndFilterTest extends TestBase {
         searchAndFilterPage.clickOnSearch();
         waitFor(5000);
         searchAndFilterPage.waitTillEmpSearchResultTableForm();
-        captureScreenshotOnFailure(driver, "screenshot_2");
+        captureScreenshotOnFailure(driver, "screenshot_3");
         Assert.assertEquals(searchAndFilterPage.getEmpName(), "Brody Alann");
         nm = searchAndFilterPage.getEmpName();
         System.out.println("Emp name in table --> " + nm) ;

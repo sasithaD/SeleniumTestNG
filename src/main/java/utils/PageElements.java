@@ -102,7 +102,7 @@ public class PageElements {
 
     /*-----------------Travel Request Page Elements--------------*/
     public static final String MENU_TRAVEL_SELECTOR = "a[href='/client/#/noncore/expense/viewEmployeeEstimateRequest']";
-    public static final String BTN_ASSIGN_TRAVEL_REQST = "//a[@id='addItemBtn']"; //"div[id='list_item_add']"; //"a[id='addItemBtn']";
+    public static final String BTN_ASSIGN_TRAVEL_REQST = "//i[@class='large material-icons']"; //"//a[@id='addItemBtn']"; //"div[id='list_item_add']"; //"a[id='addItemBtn']";
 
 
 

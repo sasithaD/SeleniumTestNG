@@ -1,5 +1,6 @@
 package PageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -64,19 +65,19 @@ public class SearchAndFilterPage extends TestBase {
     }
 
     public void waitTillPageLoad(){
-        waitUntilElementIsVisibleByXpath("//*[@id='menuQuickSearch_menuQuickSearch']", 3);
+        waitForElementVisibilityBy(By.xpath("//*[@id='menuQuickSearch_menuQuickSearch']"), 3);
     }
 
     public void waitTillFilterIcon(){
-        waitUntilElementIsVisibleByXpath("//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.search()']", 5); // "//*[@id='ribbon-actions']/ui-view/ul/li[3]/a"
+        waitForElementVisibilityBy(By.xpath("//a[@class='employee-navbar-button action-icon' and @ng-click='navbar.search()']"), 5);
     }
 
     public void waitTillEmpSearchForm(){
-        waitUntilElementIsVisibleByXpath("//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']", 3);
+        waitForElementVisibilityBy(By.xpath("//*[@id='employee_list_search_modal']//*[text()='Filter Employees By']"), 3);
     }
 
     public void waitTillEmpSearchResultTableForm(){
-        waitUntilElementIsVisibleByXpath("//*[@id='employeeListTable']", 5);
+        waitForElementVisibilityBy(By.xpath("//*[@id='employeeListTable']"), 5);
     }
 
     public void clickMenuEmpManagement(){
