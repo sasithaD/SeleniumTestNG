@@ -1,4 +1,4 @@
-package RetryAnalyzer;
+package utils.retryAnalyzer;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -14,10 +14,7 @@ public class RetryTestListener extends TestListenerAdapter {
         if(result.getMethod().getRetryAnalyzer(result).retry(result)) {
             result.setStatus(ITestResult.SKIP);
         }
-
-
         Reporter.setCurrentTestResult(null);
-
     }
 
 }

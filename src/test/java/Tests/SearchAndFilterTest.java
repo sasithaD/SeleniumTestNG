@@ -1,8 +1,8 @@
 package Tests;
 
 import PageObjects.SearchAndFilterPage;
-import RetryAnalyzer.RetryAnalyzer;
-import RetryAnalyzer.RetryTestListener;
+import utils.retryAnalyzer.RetryAnalyzer;
+import utils.retryAnalyzer.RetryTestListener;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;

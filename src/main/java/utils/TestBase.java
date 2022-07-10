@@ -24,8 +24,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import jxl.Sheet;
@@ -36,13 +36,13 @@ import jxl.read.biff.BiffException;
 public class TestBase {
 
     public static WebDriver driver;
-    public static Properties properties;
+    public static Properties properties = new Properties();
     public static Logger testBaseLogger = Logger.getLogger(String.valueOf(TestBase.class));
     public static SoftAssert softAssert = new SoftAssert();
+    public static Map<String, String> actualData = new HashMap<String, String>();
 
     public static void readPropertyFile() {
         try {
-            properties = new Properties();
             FileInputStream fileInputStream = new FileInputStream("configurations/properties/config.properties");
             properties.load(fileInputStream);
         } catch (FileNotFoundException e) {
@@ -477,6 +477,21 @@ public class TestBase {
         PDDocument documentObject = PDDocument.load(inputFile);
         PDFTextStripper objPDFStrip = new PDFTextStripper();
         return objPDFStrip.getText(documentObject);
+    }
+
+    public void writeActualValue(String key, String value) {
+        testBaseLogger.info("Writing the actual value into the key: " + key + "");
+        actualData.put(key, value);
+    }
+
+    public String readActualValue(String key) {
+        testBaseLogger.info("Reading the actual value stored in the key: " + key + "");
+        return actualData.get(key);
+    }
+
+    public String getNumericValue(String textValue) {
+        testBaseLogger.info("Capturing only the numeric value of text: " + textValue + "");
+        return textValue.replaceAll("[^0-9]", "");
     }
 
 }

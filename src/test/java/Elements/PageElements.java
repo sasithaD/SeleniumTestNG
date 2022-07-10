@@ -1,4 +1,4 @@
-package utils;
+package Elements;
 
 public class PageElements {
 
@@ -83,4 +83,15 @@ public class PageElements {
 
     /*-----------------Attendance Page Elements--------------*/
     public static final String DOWNLOAD_PDF_BTN_SELECTOR = "button[data-icon='ohrm_file_pdf']";
+
+    /*-----------------GreenKart Home Page Elements--------------*/
+    public static final String VEG_SEARCH_INPUT_SELECTOR = "input[class='search-keyword']";
+    public static final String PRODUCT_PRICE_SELECTOR = ".products .product .product-price";
+    public static final String ADD_TO_CART_BTN_SELECTOR = "//button[contains(text(),'ADD TO CART')]";
+    public static final String CART_BTN_SELECTOR = "img[alt='Cart']";
+    public static final String PROCEED_TO_CHECKOUT_BTN_SELECTOR = "//button[contains(text(),'PROCEED TO CHECKOUT')]";
+
+    /*-----------------GreenKart Cart Page Elements--------------*/
+    public static final String TOTAL_PRICE_SELECTOR = ".discountAmt";
+    public static final String DISCOUNT_AMOUNT_SELECTOR = ".discountPerc";
 }
