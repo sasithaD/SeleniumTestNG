@@ -1,5 +1,6 @@
 package PageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -82,15 +83,15 @@ public class AddUserPage extends TestBase {
     }
 
     public void waitUntilForm(){
-        waitUntilElementIsVisibleByCss("select[id='systemUser_status']", 2);
+        waitForElementVisibilityBy(By.cssSelector("select[id='systemUser_status']"), 2);
     }
 
     public void waitUntilSave(){
-        waitUntilElementIsVisibleByCss("input[id='btnAdd']", 2);
+        waitForElementVisibilityBy(By.cssSelector("input[id='btnAdd']"), 2);
     }
 
     public void waitUntilMenu(){
-        waitUntilElementIsVisibleByCss("input[id='btnAdd']", 5);
+        waitForElementVisibilityBy(By.cssSelector("input[id='btnAdd']"), 2);
     }
 
 }
