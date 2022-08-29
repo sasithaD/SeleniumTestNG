@@ -1,7 +1,7 @@
 package Tests;
 
-import PageObjects.HomePage.HomePage;
-import PageObjects.LoginPage.LoginPage;
+import PageObjects.HomePage;
+import PageObjects.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import utils.TestBase;
@@ -25,6 +25,7 @@ public class TestLoginPage extends TestBase {
 
     @Test
     public void loginWithValidCredentials() throws InterruptedException {
+
         loginPage.enterUserName("Admin");
         loginPage.enterPassword("admin123");
         loginPage.clickLoginBtn();
@@ -65,4 +66,5 @@ public class TestLoginPage extends TestBase {
     public void closeWebDriver() {
         driver.quit();
     }
+
 }

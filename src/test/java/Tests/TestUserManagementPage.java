@@ -1,8 +1,8 @@
 package Tests;
 
-import PageObjects.HomePage.HomePage;
-import PageObjects.LoginPage.LoginPage;
-import PageObjects.UserManagementPage.UserManagementPage;
+import PageObjects.HomePage;
+import PageObjects.LoginPage;
+import PageObjects.UserManagementPage;
 import org.testng.annotations.*;
 import utils.TestBase;
 
